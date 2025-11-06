@@ -1,68 +1,71 @@
-package com.example.lumuttest.presentation;
+package com.example.lumuttest.presentation
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import com.example.lumuttest.data.remote.Todo;
-import com.example.lumuttest.domain.use_case.GetTodoByIdUseCase;
-import com.example.lumuttest.domain.use_case.GetTodosUseCase;
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.lumuttest.data.remote.Todo
+import com.example.lumuttest.domain.use_case.GetTodoByIdUseCase
+import com.example.lumuttest.domain.use_case.GetTodosUseCase
+import kotlinx.coroutines.launch
 
-import java.util.List;
+class TodoViewModel : ViewModel() {
+    private val getTodosUseCase: GetTodosUseCase = GetTodosUseCase()
+    private val getTodoByIdUseCase: GetTodoByIdUseCase = GetTodoByIdUseCase()
 
-public class TodoViewModel extends ViewModel {
-    private final GetTodosUseCase getTodosUseCase;
-    private final GetTodoByIdUseCase getTodoByIdUseCase;
-    private final MutableLiveData<List<Todo>> _todos = new MutableLiveData<>();
-    public final LiveData<List<Todo>> todos = _todos;
-    private final MutableLiveData<Todo> _selectedTodo = new MutableLiveData<>();
-    public final LiveData<Todo> selectedTodo = _selectedTodo;
-    private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>();
-    public final LiveData<Boolean> isLoading = _isLoading;
-    private final MutableLiveData<Boolean> _isDetailLoading = new MutableLiveData<>();
-    public final LiveData<Boolean> isDetailLoading = _isDetailLoading;
-    private final MutableLiveData<String> _error = new MutableLiveData<>();
-    public final LiveData<String> error = _error;
+    private val _todos = MutableLiveData<List<Todo>>()
+    val todos: LiveData<List<Todo>> = _todos
 
-    public TodoViewModel() {
-        this.getTodosUseCase = new GetTodosUseCase();
-        this.getTodoByIdUseCase = new GetTodoByIdUseCase();
-        fetchTodos();
+    private val _selectedTodo = MutableLiveData<Todo?>()
+    val selectedTodo: LiveData<Todo?> = _selectedTodo
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _isDetailLoading = MutableLiveData<Boolean>()
+    val isDetailLoading: LiveData<Boolean> = _isDetailLoading
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String> = _error
+
+    init {
+        fetchTodos()
     }
 
-    private void fetchTodos() {
-        _isLoading.setValue(true);
-        new Thread(() -> {
+    private fun fetchTodos() {
+        _isLoading.value = true
+        viewModelScope.launch {
             try {
-                List<Todo> result = getTodosUseCase.execute();
-                _todos.postValue(result);
-            } catch (Exception e) {
-                _error.postValue(e.getMessage());
+                val result = getTodosUseCase.execute()
+                _todos.postValue(result)
+            } catch (e: Throwable) {
+                _error.postValue(e.message)
             } finally {
-                _isLoading.postValue(false);
+                _isLoading.postValue(false)
             }
-        }).start();
+        }
     }
 
-    public void fetchTodoById(int id) {
+    fun fetchTodoById(id: Int) {
         if (id == -1) {
-            _selectedTodo.postValue(null);
-            return;
+            _selectedTodo.postValue(null)
+            return
         }
 
-        _isDetailLoading.setValue(true);
-        new Thread(() -> {
+        _isDetailLoading.value = true
+        viewModelScope.launch {
             try {
-                Todo result = getTodoByIdUseCase.execute(id);
-                _selectedTodo.postValue(result);
-            } catch (Exception e) {
-                _error.postValue(e.getMessage());
+                val result = getTodoByIdUseCase.execute(id)
+                _selectedTodo.postValue(result)
+            } catch (e: Throwable) {
+                _error.postValue(e.message)
             } finally {
-                _isDetailLoading.postValue(false);
+                _isDetailLoading.postValue(false)
             }
-        }).start();
+        }
     }
 
-    public void onBack() {
-        _selectedTodo.setValue(null);
+    fun onBack() {
+        _selectedTodo.value = null
     }
 }

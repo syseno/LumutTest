@@ -1,15 +1,12 @@
-package com.example.lumuttest.data.remote;
+package com.example.lumuttest.data.remote
 
-import java.util.List;
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-
-public interface ApiService {
+interface ApiService {
     @GET("/todos")
-    Call<List<Todo>> getTodos();
+    suspend fun getTodos(): List<Todo>
 
     @GET("/todos/{id}")
-    Call<Todo> getTodoById(@Path("id") int id);
+    suspend fun getTodoById(@Path("id") id: Int): Todo
 }

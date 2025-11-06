@@ -1,24 +1,8 @@
-package com.example.lumuttest.data.remote;
+package com.example.lumuttest.data.remote
 
-public class Todo {
-    private int userId;
-    private int id;
-    private String title;
-    private boolean completed;
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-}
+data class Todo(
+    val userId: Int,
+    val id: Int,
+    val title: String,
+    val completed: Boolean
+)

@@ -203,7 +203,7 @@ fun TodoItem(todo: Todo, onClick: () -> Unit) {
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = todo.title, style = MaterialTheme.typography.bodyLarge)
-            Text(text = "Completed: ${todo.isCompleted}", style = MaterialTheme.typography.bodySmall)
+            Text(text = "Completed: ${todo.completed}", style = MaterialTheme.typography.bodySmall)
         }
     }
 }
@@ -224,7 +224,7 @@ fun TodoDetail(todo: Todo, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = "User ID: ${todo.userId}", style = MaterialTheme.typography.bodyLarge)
             Text(text = "ID: ${todo.id}", style = MaterialTheme.typography.bodyLarge)
-            Text(text = "Completed: ${todo.isCompleted}", style = MaterialTheme.typography.bodyLarge)
+            Text(text = "Completed: ${todo.completed}", style = MaterialTheme.typography.bodyLarge)
         }
     }
 }

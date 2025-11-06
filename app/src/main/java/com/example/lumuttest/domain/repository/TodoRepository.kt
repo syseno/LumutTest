@@ -1,9 +1,8 @@
-package com.example.lumuttest.domain.repository;
+package com.example.lumuttest.domain.repository
 
-import com.example.lumuttest.data.remote.Todo;
-import java.util.List;
+import com.example.lumuttest.data.remote.Todo
 
-public interface TodoRepository {
-    List<Todo> getTodos() throws Exception;
-    Todo getTodoById(int id) throws Exception;
+interface TodoRepository {
+    suspend fun getTodos(): List<Todo>
+    suspend fun getTodoById(id: Int): Todo?
 }

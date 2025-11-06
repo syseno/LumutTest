@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.lumuttest"
-    compileSdkPreview = "CANARY"
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.lumuttest"
@@ -28,14 +28,17 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
 }
 

@@ -1,18 +1,18 @@
-package com.example.lumuttest.data.remote;
+package com.example.lumuttest.data.remote
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-public class RetrofitClient {
-    private static Retrofit retrofit = null;
+object RetrofitClient {
+    private var retrofit: Retrofit? = null
 
-    public static Retrofit getClient() {
+    fun getClient(): Retrofit {
         if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl("https://jsonplaceholder.typicode.com")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+            retrofit = Retrofit.Builder()
+                .baseUrl("https://jsonplaceholder.typicode.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         }
-        return retrofit;
+        return retrofit!!
     }
 }

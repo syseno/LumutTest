@@ -1,17 +1,13 @@
-package com.example.lumuttest.domain.use_case;
+package com.example.lumuttest.domain.use_case
 
-import com.example.lumuttest.data.remote.Todo;
-import com.example.lumuttest.data.repository.TodoRepositoryImpl;
-import com.example.lumuttest.domain.repository.TodoRepository;
+import com.example.lumuttest.data.remote.Todo
+import com.example.lumuttest.data.repository.TodoRepositoryImpl
+import com.example.lumuttest.domain.repository.TodoRepository
 
-public class GetTodoByIdUseCase {
-    private final TodoRepository repository;
+class GetTodoByIdUseCase {
+    private val repository: TodoRepository = TodoRepositoryImpl()
 
-    public GetTodoByIdUseCase() {
-        this.repository = new TodoRepositoryImpl();
-    }
-
-    public Todo execute(int id) throws Exception {
-        return repository.getTodoById(id);
+    suspend fun execute(id: Int): Todo? {
+        return repository.getTodoById(id)
     }
 }
